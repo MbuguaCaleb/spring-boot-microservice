@@ -4,32 +4,31 @@ import com.codewithcaleb.productservice.dto.ProductRequest;
 import com.codewithcaleb.productservice.dto.ProductResponse;
 import com.codewithcaleb.productservice.model.Product;
 import com.codewithcaleb.productservice.repository.ProductRepository;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 @Slf4j
 public class ProductService {
 
 
     private final ProductRepository productRepository;
 
-    public ProductService(ProductRepository productRepository) {
-        this.productRepository = productRepository;
-    }
-
     public void createProduct(ProductRequest productRequest){
 
-        log.info("Product Request");
-        log.info(String.valueOf(productRequest));
+
         //creating Object of Type Product
         //instance of product Object
         Product product = Product.builder().name(productRequest.getName())
                                  .description(productRequest.getDescription())
                                  .price(productRequest.getPrice())
                                  .build();
+
+        productRepository.save(product);
 
         //concat method
         //log.info("Product "+ product.getId()+ "is saved");
